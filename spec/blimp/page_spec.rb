@@ -20,4 +20,17 @@ describe Page do
     end
   end
 
+  context "for a JPG file" do
+    before do
+      source_file = SourceFile.new("/image.jpg", "This is not a real JPEG")
+      source_file.save_to(redis)
+    end
+
+    let(:page) { Page.from_path("/image.jpg", redis) }
+
+    it "should be image/jpeg" do
+      page.headers["Content-Type"].should == "image/jpeg"
+    end
+  end
+
 end
