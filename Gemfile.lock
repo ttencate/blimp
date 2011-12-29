@@ -61,6 +61,7 @@ DEPENDENCIES
   fakefs
   grit!
   jeweler (~> 1.6.4)
+  mime-types
   mock_redis
   pry
   rcov

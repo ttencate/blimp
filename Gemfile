@@ -6,6 +6,7 @@ source "http://rubygems.org"
 gem "redis"
 gem "grit", :git => "git://github.com/mojombo/grit.git"
 gem 'sinatra'
+gem "mime-types"
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.

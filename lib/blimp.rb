@@ -1,4 +1,5 @@
 require 'redis'
+require 'mime/types'
 
 require_relative "blimp/models/source_dir"
 require_relative "blimp/models/source_file"

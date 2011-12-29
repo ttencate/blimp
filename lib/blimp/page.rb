@@ -16,6 +16,9 @@ class Page
   end
 
   def headers
+    {"Content-Type" => MIME::Types.type_for(path).first.to_s} 
+  end
+
     case File.extname(path)
     when ".jpg"
       {"Content-Type" => "image/jpeg"}
