@@ -7,6 +7,8 @@ gem "redis"
 gem "sinatra"
 gem "liquid"
 gem "mime-types"
+gem "activesupport"
+gem "i18n"
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.
@@ -21,4 +23,5 @@ end
 group :test do
   gem "fakefs"
   gem "mock_redis"
+  gem "rack-test"
 end
