@@ -19,7 +19,7 @@ Jeweler::Tasks.new do |gem|
   gem.license = "MIT"
   gem.summary = %Q{Git-based website generator}
   gem.description = %Q{TODO: longer description of your gem}
-  gem.email = "marten@veldthuis.com"
+  gem.email = ["ttencate@gmail.com", "marten@veldthuis.com"]
   gem.authors = ["Thomas ten Cate", "Marten Veldthuis"]
   # dependencies defined in Gemfile
 end
