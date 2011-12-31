@@ -1,36 +1,32 @@
 require "spec_helper"
 
 describe Site do
-  let(:root) { stub(:to_path => "/") }
-  let(:site) { Site.new(root) }
-
-  describe Config do
-    it "should load from YAML" do
-      path = stub
-      YAML.should_receive(:load).with(path).and_return(Hash.new)
-      Site::Config.load(path)
-    end
-  end
+  let(:redis) { MockRedis.new }
+  let(:site) { Site.new("my-site", redis) }
 
   it "should be initializable" do
-    Site.new("/site").should be
+    site.should be
   end
 
-  it "should have a config" do
-    config = stub
-    Site::Config.stub(:load).with(File.join(root, ".config.yml")) { config } 
-    site.config.should == config
-  end
-
-  it "should have a templates path" do
-    site.templates_path.should == File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "templates"))
+  describe "config" do
+    it "should have a config if file exists"
+    it "should have an empty config if file does not exist"
   end
 
   describe "#layout" do
     it "should have a layout" do
       layout = "<!DOCTYPE html>"
-      File.stub(:read).with(File.join(site.templates_path, "layout.liquid")) { layout }
+      File.stub(:read).with(File.join(site.send(:templates_path), "layout.liquid")) { layout }
       site.layout.should be_a(Liquid::Template)
+    end
+  end
+
+  describe "#find_page" do
+    it "should find a page" do
+      path = stub
+      page = stub
+      Page.stub(:from_path).with(path, redis, site) { page }
+      site.find_page(path).should == page
     end
   end
 end

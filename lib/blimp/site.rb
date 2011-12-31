@@ -1,28 +1,29 @@
+require 'yaml'
+
 class Site
+  attr_reader :key
+  attr_reader :redis
+
   liquid_methods :title
 
-  attr_reader :root
-
-  class Config
-    def self.load(path)
-      YAML.load(path)
-    end
-  end
-
-  def initialize(root)
-    @root = root
-  end
-  
-  def config
-    Config.load(File.join(root, ".config.yml"))
-  end
-
-  def templates_path
-    File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "templates"))
+  def initialize(key, redis)
+    @key = key
+    @redis = redis
   end
 
   def layout(name = "layout")
     layout_content = File.read(File.join(templates_path, "#{name}.liquid"))
     Liquid::Template.parse(layout_content)
   end
+
+  def find_page(path)
+    Page.from_path(path, redis, self)
+  end
+
+  protected
+
+  def templates_path
+    File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "templates"))
+  end
+
 end
