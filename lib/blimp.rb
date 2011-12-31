@@ -1,6 +1,7 @@
 require 'redis'
 require 'liquid'
 require 'mime/types'
+require 'active_support/core_ext'
 
 require_relative "blimp/models/source_dir"
 require_relative "blimp/models/source_file"
