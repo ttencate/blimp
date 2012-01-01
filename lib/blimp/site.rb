@@ -2,22 +2,23 @@ require 'yaml'
 
 class Site
   attr_reader :key
-  attr_reader :redis
+  attr_reader :source
+  attr_reader :theme
 
   liquid_methods :title
 
-  def initialize(key, source, redis)
+  def initialize(key, source)
     @key = key
-    @redis = redis
-  end
-
-  def layout(name = "layout")
-    layout_content = File.read(File.join(templates_path, "#{name}.liquid"))
-    Liquid::Template.parse(layout_content)
+    @source = source
+    @theme = Theme.new
   end
 
   def find_page(path)
-    Page.from_path(path, redis, self)
+    Page.from_path(path, source)
+  end
+
+  def render_page(page)
+    theme.render_page(page)
   end
 
   protected

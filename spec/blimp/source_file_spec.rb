@@ -2,7 +2,6 @@ require "spec_helper"
 
 describe SourceFile do
   let(:file) { SourceFile.new("/foo.markdown") }
-  let(:redis) { MockRedis.new }
 
   it "should remember its name" do
     file.path.should == "/foo.markdown"

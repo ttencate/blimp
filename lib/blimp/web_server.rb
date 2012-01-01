@@ -4,9 +4,8 @@ module Blimp
   class WebServer < Sinatra::Base
     before do
       @root = File.join(File.expand_path(File.dirname(__FILE__)), "../../sample")
-      @redis = Redis.new
       @source = Blimp::Sources::DiskSource.new(@root)
-      @site = Site.new(@root, @source, @redis)
+      @site = Site.new(@root, @source)
     end
     
     get '*' do

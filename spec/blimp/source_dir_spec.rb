@@ -3,7 +3,6 @@ require "spec_helper"
 describe SourceDir do
   let(:dir) { SourceDir.new("/foo") }
   let(:dir_with_entries) { SourceDir.new("/bar", ["f:/bar/about.markdown", "f:/bar/index.markdown"]) }
-  let(:redis) { MockRedis.new }
 
   it "should remember its name" do
     dir.path.should == "/foo"
