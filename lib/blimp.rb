@@ -5,6 +5,7 @@ require 'active_support/core_ext'
 
 require_relative "blimp/source"
 require_relative "blimp/sources/disk_source"
+require_relative "blimp/sources/mock_source"
 
 require_relative "blimp/source_dir"
 require_relative "blimp/source_file"
