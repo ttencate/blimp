@@ -7,7 +7,6 @@ module Blimp
       @redis = Redis.new
       @source = Blimp::Sources::DiskSource.new(@root)
       @site = Site.new(@root, @source, @redis)
-      FileSystemSyncer.new(@root, @redis).sync!
     end
     
     get '*' do

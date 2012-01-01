@@ -10,27 +10,7 @@ class SourceFile
     @contents = contents
   end
 
-  def key
-    self.class.key(path)
-  end
-
-  def self.key(path)
-    "f:" + path
-  end
-
-  def self.load_from(redis, path)
-    key = key(path)
-    contents = redis.get(key)
-    raise NotFound unless contents
-    self.new(path, contents)
-  end
-
-  def save_to(redis)
-    redis.set(key, contents)
-  end
-
   def ==(other)
     path == other.path and contents == other.contents
   end
-
 end

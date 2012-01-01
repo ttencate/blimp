@@ -21,38 +21,4 @@ describe SourceDir do
     dir.entries << entry1 << entry2
     dir.entries.should == [entry1, entry2]
   end
-
-  it "should generate its key" do
-    dir.key.should == "d:/foo"
-  end
-
-  it "should generate keys from paths" do
-    SourceDir.key("/foo").should == "d:/foo"
-  end
-
-  describe "persistence" do
-    it "should be savable with entries" do
-      dir_with_entries.save_to(redis)
-      redis.scard(dir_with_entries.key).should == 2
-    end
-
-    it "should be savable without entries" do
-      dir.save_to(redis)
-      redis.scard(dir.key).should == 0
-    end
-
-    it "should be retrievable with entries" do
-      dir_with_entries.save_to(redis)
-      SourceDir.load_from(redis, dir_with_entries.path).should == dir_with_entries
-    end
-
-    it "should be retrievable without entries" do
-      dir.save_to(redis)
-      SourceDir.load_from(redis, dir.path).should == dir
-    end
-
-    it "should appear empty if not in redis" do
-      SourceDir.load_from(redis, "/unknown").should == SourceDir.new("/unknown", [])
-    end
-  end
 end
