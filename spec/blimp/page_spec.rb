@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe Page do
-  let(:layout) { Liquid::Template.parse("{{ page }}") }
+  let(:layout) { Liquid::Template.parse("{{ content }}") }
   let(:site) { stub(:layout => layout, :title => "Title!") }
   let(:redis) { MockRedis.new }
 
