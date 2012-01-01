@@ -2,7 +2,8 @@ require "spec_helper"
 
 describe Site do
   let(:redis) { MockRedis.new }
-  let(:site) { Site.new("my-site", redis) }
+  let(:source) { stub }
+  let(:site) { Site.new("my-site", source, redis) }
 
   it "should be initializable" do
     site.should be

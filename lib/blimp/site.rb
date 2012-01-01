@@ -6,7 +6,7 @@ class Site
 
   liquid_methods :title
 
-  def initialize(key, redis)
+  def initialize(key, source, redis)
     @key = key
     @redis = redis
   end
