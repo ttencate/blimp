@@ -10,7 +10,9 @@ class Site
   def initialize(key, source)
     @key = key
     @source = source
-    @theme = Theme.new
+
+    theme_source = Blimp::Sources::DiskSource.new(templates_path)
+    @theme = Theme.new(theme_source, "/")
   end
 
   def find_page(path)
