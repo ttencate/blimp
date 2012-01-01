@@ -5,7 +5,7 @@ module Blimp
     before do
       @root = File.join(File.expand_path(File.dirname(__FILE__)), "../../sample")
       @redis = Redis.new
-      @source = Blimp::Sources::DiskSource.new(@root, @redis)
+      @source = Blimp::Sources::DiskSource.new(@root)
       @site = Site.new(@root, @source, @redis)
       FileSystemSyncer.new(@root, @redis).sync!
     end
