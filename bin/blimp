@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+require 'optparse'
+require_relative '../lib/blimp'
+
+options = {}
+option_parser = OptionParser.new do |opts|
+  opts.banner = "Usage: blimp [options] [command]"
+
+  opts.on("--help", "Show this info") do
+    puts opts
+    exit
+  end
+end
+
+option_parser.parse!(ARGV)
+
+command = ARGV.pop
+
+case command
+when "new"
+  puts "We can't do that yet."
+when "preview"
+  exec "bundle exec shotgun"
+else
+  puts "Unknown command: #{command}\n"
+  puts option_parser
+  exit
+end
