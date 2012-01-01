@@ -33,12 +33,12 @@ describe SourceDir do
   describe "persistence" do
     it "should be savable with entries" do
       dir_with_entries.save_to(redis)
-      redis.get(dir_with_entries.key).should be
+      redis.scard(dir_with_entries.key).should == 2
     end
 
     it "should be savable without entries" do
       dir.save_to(redis)
-      redis.get(dir.key).should be
+      redis.scard(dir.key).should == 0
     end
 
     it "should be retrievable with entries" do
@@ -51,10 +51,8 @@ describe SourceDir do
       SourceDir.load_from(redis, dir.path).should == dir
     end
 
-    it "should raise if not in redis" do
-      expect { 
-        SourceDir.load_from(redis, "/unknown")
-      }.to raise_error(SourceDir::NotFound)
+    it "should appear empty if not in redis" do
+      SourceDir.load_from(redis, "/unknown").should == SourceDir.new("/unknown", [])
     end
   end
 end

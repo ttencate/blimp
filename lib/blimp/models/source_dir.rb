@@ -20,13 +20,16 @@ class SourceDir
 
   def self.load_from(redis, path)
     key = key(path)
-    value = redis.get(key)
-    raise NotFound unless value
-    self.new(path, value.split("\0"))
+    entries = redis.smembers(key)
+    entries = entries.sort()
+    self.new(path, entries)
   end
 
   def save_to(redis)
-    redis.set(key, entries.join("\0"))
+    redis.del(key)
+    for entry in entries do
+      redis.sadd(key, entry)
+    end
   end
 
   def ==(other)
