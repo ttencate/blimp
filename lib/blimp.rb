@@ -6,8 +6,8 @@ require 'active_support/core_ext'
 require_relative "blimp/source"
 require_relative "blimp/sources/disk_source"
 
-require_relative "blimp/models/source_dir"
-require_relative "blimp/models/source_file"
+require_relative "blimp/source_dir"
+require_relative "blimp/source_file"
 require_relative "blimp/file_system_syncer"
 
 require_relative "blimp/site"
