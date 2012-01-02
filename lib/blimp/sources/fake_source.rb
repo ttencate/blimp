@@ -1,6 +1,6 @@
 module Blimp
   module Sources
-    class MockSource < Blimp::Source
+    class FakeSource < Blimp::Source
       def initialize(tree)
         @files = {}
         @dirs = {}

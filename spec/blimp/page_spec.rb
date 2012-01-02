@@ -3,7 +3,7 @@ require "spec_helper"
 describe Page do
   describe "#from_path" do
     context "for raw HTML files" do
-      let(:source) { Blimp::Sources::MockSource.new({ "index.html" => "This is my homepage" }) }
+      let(:source) { Blimp::Sources::FakeSource.new({ "index.html" => "This is my homepage" }) }
       let(:page) { Page.from_path("/index.html", source) }
 
       it "should have a body" do
@@ -17,7 +17,7 @@ describe Page do
     end
 
     context "for markdown files" do
-      let(:source) { Blimp::Sources::MockSource.new({ "index.html.markdown" => "# This is my homepage" }) }
+      let(:source) { Blimp::Sources::FakeSource.new({ "index.html.markdown" => "# This is my homepage" }) }
       let(:page) { Page.from_path("/index.html", source) }
 
       it "renders as markdown" do
@@ -36,7 +36,7 @@ describe Page do
     end
 
     context "for a JPG file" do
-      let(:source) { Blimp::Sources::MockSource.new({ "image.jpg" => "This is not a real JPEG" }) }
+      let(:source) { Blimp::Sources::FakeSource.new({ "image.jpg" => "This is not a real JPEG" }) }
       let(:page) { Page.from_path("/image.jpg", source) }
 
       it "should be image/jpeg" do
