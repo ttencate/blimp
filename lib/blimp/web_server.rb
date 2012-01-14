@@ -2,10 +2,13 @@ require 'sinatra/base'
 
 module Blimp
   class WebServer < Sinatra::Base
+    configure :production, :development do
+      enable :logging
+    end
+
     before do
-      @root = File.join(Blimp.root.join("sample"))
-      @source = Blimp::Sources::DiskSource.new(@root)
-      @site = Site.new(@root, @source)
+      logger.info "Sites defined: #{Site.all}"
+      @site = Site.find_by_domain(request.host) or raise Sinatra::NotFound, "No site defined for #{request.host}"
     end
     
     get '*' do

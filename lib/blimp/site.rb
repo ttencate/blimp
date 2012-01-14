@@ -25,6 +25,10 @@ class Site
     def find_by_domain(domain)
       Site.all.find {|i| i.has_domain?(domain) }
     end
+
+    def clear
+      self.sites = []
+    end
   end
 
   def initialize(key, source, options = {})
