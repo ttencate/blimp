@@ -15,6 +15,15 @@ require 'blimp'
 # in ./support/ and its subdirectories.
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
+Rspec::Matchers.define :have_types do |types|
+  match do |array|
+    array.length == types.length and array.zip(types).map {|element, type| element.is_a?(type) }.all?
+  end
+  failure_message_for_should do |array|
+    "Expected types #{types}, got types #{array.map {|e| e.class}}"
+  end
+end
+
 RSpec.configure do |config|
   config.before(:each) { Sites.clear }
 end
