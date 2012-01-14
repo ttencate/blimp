@@ -39,14 +39,6 @@ module Blimp
 
       protected
 
-      def visible?(path)
-        File.basename(path)[0] != "."
-      end
-
-      def hidden?(path)
-        not visible?(path)
-      end
-
       def disk_path(path)
         File.join(root, path)
       end

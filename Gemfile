@@ -10,6 +10,7 @@ gem "mime-types"
 gem "activesupport"
 gem "i18n"
 gem "maruku"
+gem "grit"
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.
