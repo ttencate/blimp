@@ -33,7 +33,7 @@ describe Blimp::Sources::DiskSource do
 
     it "should not allow access to hidden directories" do
       expect {
-        source.get_dir("./hidden_dir")
+        source.get_dir("/.hidden_dir")
       }.to raise_error(SourceDir::NotFound)
     end
 
