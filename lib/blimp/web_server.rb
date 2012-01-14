@@ -17,13 +17,14 @@ module Blimp
 
     get '*' do
       begin
-        page = @site.find_page(request.path_info)
-      rescue Page::NotFound
+        handler = @site.handler_for_path(request.path_info)
+        response_headers, response_body = handler.handle(request.path_info, params)
+      rescue Site::NoHandler
         raise Sinatra::NotFound
       end
 
-      headers page.headers
-      body    page.body 
+      headers response_headers
+      body    response_body
     end
   end
 end

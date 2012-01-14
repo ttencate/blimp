@@ -13,6 +13,10 @@ require_relative "blimp/sources/git_source"
 require_relative "blimp/source_dir"
 require_relative "blimp/source_file"
 
+require_relative "blimp/handler"
+require_relative "blimp/handlers/page_handler"
+require_relative "blimp/handlers/static_handler"
+
 require_relative "blimp/site"
 require_relative "blimp/sites"
 require_relative "blimp/theme"
