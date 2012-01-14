@@ -1,24 +1,22 @@
 require "spec_helper"
 
 describe Site do
-  let(:source) { stub }
+  let(:source) { Blimp::Sources::FakeSource.new({ "templates" => { "layout.liquid" => "{{ content }}" } }) }
   let(:site) { Site.new("my-site", source) }
-
-  before { source.stub(:get_file).with("/templates/layout.liquid").and_return(stub(:contents => "{{ content }}")) }
 
   it "should be initializable" do
     site.should be
   end
 
   describe ".add" do
-    it 'remembers a site' do
+    it "remembers a site" do
       Site.add(site)
       Site.all.should == [site]
     end
   end
 
   describe ".find_by_domain" do
-    it 'finds a site with a single domain' do
+    it "finds a site with a single domain" do
       domain = "example.com"
       site = Site.new("my-site", source, domains: [domain])
       Site.add(site)
@@ -27,8 +25,25 @@ describe Site do
   end
 
   describe "config" do
-    it "should have a config if file exists"
-    it "should have an empty config if file does not exist"
+    it "should have a config if file exists" do
+      source = Blimp::Sources::FakeSource.new(
+        { "_blimp.yaml" => "handlers:\n- path: /\n  handler: static\n- path: /blog\n  handler: blog" })
+      site = Site.new("my-site", source)
+      site.handlers.should == [
+        {"path" => "/", "handler" => "static"},
+        {"path" => "/blog", "handler" => "blog"}]
+    end
+
+    it "should raise if the config file is invalid" do
+      source = Blimp::Sources::FakeSource.new({ "_blimp.yaml" => "key: @value" })
+      expect {
+        site = Site.new("my-site", source)
+      }.to raise_error(Site::InvalidConfig)
+    end
+
+    it "should have a default config if config file does not exist" do
+      site.handlers.should == []
+    end
   end
 
   describe "#find_page" do
