@@ -13,11 +13,7 @@ describe Blimp::WebServer do
     sample_root = Blimp.root.join("sample")
     sample_source = Blimp::Sources::DiskSource.new(sample_root)
     sample_site = Site.new("sample", sample_source, domains: ["example.org"])
-    Site.add(sample_site)
-  end
-
-  after do
-    Site.clear
+    Sites.add(sample_site)
   end
 
   it "should respond for a known page" do

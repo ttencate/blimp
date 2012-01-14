@@ -12,29 +12,6 @@ class Site
 
   liquid_methods :title
 
-  class << self
-    protected
-    attr_accessor :sites
-
-    public
-    def add(site)
-      self.sites ||= []
-      self.sites << site
-    end
-
-    def all
-      self.sites
-    end
-    
-    def find_by_domain(domain)
-      Site.all.find {|i| i.has_domain?(domain) }
-    end
-
-    def clear
-      self.sites = []
-    end
-  end
-
   def initialize(key, source, options = {})
     @key = key
     @source = source

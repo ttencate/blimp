@@ -8,7 +8,7 @@ module Blimp
 
     before do
       logger.info "Started GET \"#{request.path_info}\" for #{request.ip} at #{Time.now.strftime("%Y-%m-%d %H:%M:%s")}"
-      @site = Site.find_by_domain(request.host) or raise Sinatra::NotFound, "No site defined for #{request.host}"
+      @site = Sites.find_by_domain(request.host) or raise Sinatra::NotFound, "No site defined for #{request.host}"
     end
 
     after do

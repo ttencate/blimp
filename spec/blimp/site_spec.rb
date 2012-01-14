@@ -8,22 +8,6 @@ describe Site do
     site.should be
   end
 
-  describe ".add" do
-    it "remembers a site" do
-      Site.add(site)
-      Site.all.should == [site]
-    end
-  end
-
-  describe ".find_by_domain" do
-    it "finds a site with a single domain" do
-      domain = "example.com"
-      site = Site.new("my-site", source, domains: [domain])
-      Site.add(site)
-      Site.find_by_domain(domain).should == site
-    end
-  end
-
   describe "config" do
     it "should have a config if file exists" do
       source = Blimp::Sources::FakeSource.new(

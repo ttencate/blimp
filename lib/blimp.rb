@@ -14,6 +14,7 @@ require_relative "blimp/source_dir"
 require_relative "blimp/source_file"
 
 require_relative "blimp/site"
+require_relative "blimp/sites"
 require_relative "blimp/theme"
 require_relative "blimp/page"
 require_relative "blimp/static"
