@@ -3,7 +3,7 @@ require 'sinatra/base'
 module Blimp
   class WebServer < Sinatra::Base
     before do
-      @root = File.join(File.expand_path(File.dirname(__FILE__)), "../../sample")
+      @root = File.join(Blimp.root.join("sample"))
       @source = Blimp::Sources::DiskSource.new(@root)
       @site = Site.new(@root, @source)
     end

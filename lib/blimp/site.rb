@@ -26,7 +26,7 @@ class Site
   protected
 
   def templates_path
-    File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "templates"))
+    Blimp.root.join("templates")
   end
 
 end

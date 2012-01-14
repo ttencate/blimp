@@ -19,5 +19,4 @@ class Page
   def headers
     {"Content-Type" => MIME::Types.type_for(path).first.to_s} 
   end
-  
 end
