@@ -10,12 +10,7 @@ describe Site do
 
   describe "config" do
     it "should have a config if file exists" do
-      source = Blimp::Sources::FakeSource.new(
-        { "_blimp.yaml" => "handlers:\n- path: /\n  handler: static\n- path: /blog\n  handler: blog" })
-      site = Site.new("my-site", source)
-      site.handlers.should == [
-        {"path" => "/", "handler" => "static"},
-        {"path" => "/blog", "handler" => "blog"}]
+      pending
     end
 
     it "should raise if the config file is invalid" do
@@ -26,7 +21,54 @@ describe Site do
     end
 
     it "should have a default config if config file does not exist" do
-      site.handlers.should == []
+      pending
+    end
+  end
+
+  describe "#get_handler" do
+    Rspec::Matchers.define :have_types do |types|
+      match do |array|
+        array.length == types.length and array.zip(types).map {|element, type| element.is_a?(type) }.all?
+      end
+      failure_message_for_should do |array|
+        "Expected types #{types}, got types #{array.map {|e| e.class}}"
+      end
+    end
+
+    context "without any handlers configured" do
+      let(:source) { Blimp::Sources::FakeSource.new({ "_blimp.yaml" => "handlers:" }) }
+      let(:site) { Site.new("my-site", source) }
+
+      it "should return the default handlers for the root" do
+        site.handlers_for_path("/").should have_types([Blimp::Handlers::PageHandler, Blimp::Handlers::StaticHandler])
+      end
+
+      it "should return the default handlers for a subdir" do
+        site.handlers_for_path("/subdir").should have_types([Blimp::Handlers::PageHandler, Blimp::Handlers::StaticHandler])
+      end
+    end
+
+    context "with some handlers configured" do
+      let(:source) { Blimp::Sources::FakeSource.new(
+        { "_blimp.yaml" => "handlers:\n- path: /\n  handler: static\n- path: /page\n  handler: page" }) }
+      let(:site) { Site.new("my-site", source) }
+
+      it "should return handlers for the root" do
+        site.handlers_for_path("/").should have_types([Blimp::Handlers::StaticHandler])
+      end
+
+      it "should return configured handlers for subdirectories" do
+        site.handlers_for_path("/page").should have_types([Blimp::Handlers::PageHandler, Blimp::Handlers::StaticHandler])
+      end
+
+      it "should fall back the handler of parent directories" do
+        site.handlers_for_path("/foo").should have_types([Blimp::Handlers::StaticHandler])
+        site.handlers_for_path("/page/foo").should have_types([Blimp::Handlers::PageHandler, Blimp::Handlers::StaticHandler])
+      end
+
+      it "should not match prefixes incorrectly" do
+        site.handlers_for_path("/page_with_suffix").should have_types([Blimp::Handlers::StaticHandler])
+      end
     end
   end
 
