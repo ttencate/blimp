@@ -13,7 +13,8 @@ describe Blimp::Sources::MockSource do
         "empty" => {},
         "empty.html" => "",
         "subdir" => {
-          "file.html" => "File contents"
+          "file.html" => "File contents",
+          "bounce.html.markdown" => "Markdown contents"
         }
       })
     }

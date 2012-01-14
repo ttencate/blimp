@@ -18,6 +18,7 @@ describe Blimp::Sources::DiskSource do
       FileUtils.mkdir("/root/empty")
       FileUtils.mkdir("/root/.hidden_dir")
       File.open("/root/subdir/file.html", "w") {|f| f.print("File contents") }
+      File.open("/root/subdir/bounce.html.markdown", "w") {|f| f.print("Markdown contents") }
       File.open("/root/empty.html", "w")
       File.open("/root/.hidden_file", "w")
     end

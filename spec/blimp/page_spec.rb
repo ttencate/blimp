@@ -17,8 +17,8 @@ describe Page do
     end
 
     context "for markdown files" do
-      let(:source) { Blimp::Sources::MockSource.new({ "index.markdown" => "# This is my homepage" }) }
-      let(:page) { Page.from_path("/index.markdown", source) }
+      let(:source) { Blimp::Sources::MockSource.new({ "index.html.markdown" => "# This is my homepage" }) }
+      let(:page) { Page.from_path("/index.html", source) }
 
       it "renders as markdown" do
         Blimp::Renderer.should_receive(:render).with("# This is my homepage", "text/markdown").once

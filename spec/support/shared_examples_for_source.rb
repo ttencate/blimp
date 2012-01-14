@@ -7,7 +7,7 @@ shared_examples "a source" do
 
   it "should use absolute paths for directory contents" do
     source.get_dir("/subdir").should ==
-      SourceDir.new("/subdir", ["/subdir/file.html"])
+      SourceDir.new("/subdir", ["/subdir/bounce.html.markdown", "/subdir/file.html"])
   end
 
   it "should list contents of empty directories" do
@@ -61,4 +61,9 @@ shared_examples "a source" do
     }.to raise_error(SourceFile::NotFound)
   end
 
+  describe "#get_filenames_by_prefix" do
+    it "finds files based on prefix" do
+      source.get_filenames_by_prefix("/subdir/bounce.html").should == ["/subdir/bounce.html.markdown"]
+    end
+  end
 end
