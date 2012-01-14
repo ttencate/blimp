@@ -8,15 +8,15 @@ module Blimp
       end
 
       def get_file(path)
-        raise SourceFile::NotFound if hidden?(path)
+        raise SourceFile::NotFound, path if hidden?(path)
         contents = File.read(disk_path(path))
         SourceFile.new(path, contents)
       rescue
-        raise SourceFile::NotFound
+        raise SourceFile::NotFound, path
       end
 
       def get_dir(path)
-        raise SourceDir::NotFound if hidden?(path)
+        raise SourceDir::NotFound, path if hidden?(path)
         entries = []
         Dir.entries(disk_path(path)).each do |entry|
           entry_path = File.join(path, entry)
@@ -26,7 +26,7 @@ module Blimp
         entries.sort!
         SourceDir.new(path, entries)
       rescue
-        raise SourceDir::NotFound
+        raise SourceDir::NotFound, path
       end
 
       def is_file?(path)
