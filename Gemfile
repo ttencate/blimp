@@ -3,23 +3,23 @@ source "http://rubygems.org"
 # Example:
 #   gem "activesupport", ">= 2.3.5"
 
+gem "activesupport"
+gem "grit"
+gem "i18n"
+gem "liquid"
+gem "maruku"
+gem "mime-types"
 gem "redis"
 gem "sinatra"
-gem "liquid"
-gem "mime-types"
-gem "activesupport"
-gem "i18n"
-gem "maruku"
-gem "grit"
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.
 group :development do
-  gem "rspec"
   gem "jeweler", "~> 1.6.4"
-  gem "rcov", ">= 0"
   gem "pry"
   gem "shotgun"
+  gem "rcov", ">= 0"
+  gem "rspec"
 end
 
 group :test do
