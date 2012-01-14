@@ -11,8 +11,7 @@ class Site
     @key = key
     @source = source
 
-    theme_source = Blimp::Sources::DiskSource.new(templates_path)
-    @theme = Theme.new(theme_source, "/")
+    @theme = Theme.new(source, "/templates")
   end
 
   def find_page(path)
@@ -21,12 +20,6 @@ class Site
 
   def render_page(page)
     theme.render_page(page)
-  end
-
-  protected
-
-  def templates_path
-    Blimp.root.join("templates")
   end
 
 end

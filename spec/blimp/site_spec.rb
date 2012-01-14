@@ -4,6 +4,8 @@ describe Site do
   let(:source) { stub }
   let(:site) { Site.new("my-site", source) }
 
+  before { source.stub(:get_file).with("/templates/layout.liquid").and_return(stub(:contents => "{{ content }}")) }
+
   it "should be initializable" do
     site.should be
   end
