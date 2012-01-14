@@ -62,6 +62,9 @@ shared_examples "a source" do
   end
 
   describe "#get_filenames_by_prefix" do
+    it "finds files if they match their prefix" do
+      source.get_filenames_by_prefix("/subdir/bounce.html.markdown").should == ["/subdir/bounce.html.markdown"]
+    end
     it "finds files based on prefix" do
       source.get_filenames_by_prefix("/subdir/bounce.html").should == ["/subdir/bounce.html.markdown"]
     end

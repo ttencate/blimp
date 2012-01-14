@@ -21,8 +21,4 @@ class Page
     @body = body
     @mimetype = mimetype
   end
-
-  def headers
-    {"Content-Type" => mimetype}
-  end
 end
