@@ -29,9 +29,8 @@ describe Blimp::Sources::GitSource do
   end
 
   after(:all) do
-    # TODO these don't work
-    FileUtil.remove_entry_secure(normal_repo)
-    FileUtil.remove_entry_secure(bare_repo)
+    FileUtils.remove_entry_secure(normal_repo)
+    FileUtils.remove_entry_secure(bare_repo)
   end
 
   describe "#initialize" do

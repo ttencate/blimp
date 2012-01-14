@@ -17,11 +17,7 @@ module Blimp
           # Maybe it's a bare repo?
           # Grit does not check anything beyond existence of the directory, we do.
           raise NoRepo, "No git repository found in #{root}" if not File.exists?(File.join(root, "HEAD"))
-          begin
-            @repo = Grit::Repo.new(root, :is_bare => true)
-          rescue Grit::InvalidGitRepositoryError
-            raise NoRepo, "No git repository found in #{root}"
-          end
+          @repo = Grit::Repo.new(root, :is_bare => true)
         end
       end
 
