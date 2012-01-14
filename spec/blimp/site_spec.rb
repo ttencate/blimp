@@ -9,8 +9,8 @@ describe Site do
   end
 
   describe "config" do
-    it "should have a config if file exists" do
-      pending
+    it "should read the config if file exists" do
+      pending "TODO: stub the source and check that the config is being read"
     end
 
     it "should raise if the config file is invalid" do
@@ -20,8 +20,8 @@ describe Site do
       }.to raise_error(Site::InvalidConfig)
     end
 
-    it "should have a default config if config file does not exist" do
-      pending
+    it "should work if the config file does not exist" do
+      pending "TODO: stub the source and check that it attempts to read the config"
     end
   end
 
