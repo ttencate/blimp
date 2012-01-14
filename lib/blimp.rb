@@ -1,5 +1,6 @@
 require 'redis'
 require 'liquid'
+require 'maruku'
 require 'mime/types'
 require 'pathname'
 require 'active_support/core_ext'
@@ -14,8 +15,13 @@ require_relative "blimp/source_file"
 require_relative "blimp/site"
 require_relative "blimp/theme"
 require_relative "blimp/page"
+require_relative "blimp/renderer"
 
 require_relative "blimp/web_server"
+
+markdown = MIME::Type.from_hash('Content-Type' => 'text/markdown',
+                                'Extensions' => ['markdown', 'mdown', 'md'])
+MIME::Types.add(markdown)
 
 module Blimp
   def self.root

@@ -13,6 +13,8 @@ GEM
       git (>= 1.2.5)
       rake
     liquid (2.2.2)
+    maruku (0.6.0)
+      syntax (>= 1.0.0)
     method_source (0.6.7)
       ruby_parser (>= 2.3.1)
     mime-types (1.17.2)
@@ -53,6 +55,7 @@ GEM
       rack-protection (~> 1.1, >= 1.1.2)
       tilt (~> 1.3, >= 1.3.3)
     slop (2.1.0)
+    syntax (1.0.0)
     tilt (1.3.3)
 
 PLATFORMS
@@ -64,6 +67,7 @@ DEPENDENCIES
   i18n
   jeweler (~> 1.6.4)
   liquid
+  maruku
   mime-types
   mock_redis
   pry

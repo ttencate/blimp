@@ -9,6 +9,7 @@ gem "liquid"
 gem "mime-types"
 gem "activesupport"
 gem "i18n"
+gem "maruku"
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.
