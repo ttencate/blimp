@@ -5,7 +5,7 @@ module Blimp
       when "text/html"
         [contents, mimetype]
       when "text/markdown"
-        [Maruku.new(contents).to_html, "text/html"]
+        [Kramdown::Document.new(contents).to_html, "text/html"]
       else
         [contents, mimetype]
       end

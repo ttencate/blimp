@@ -1,6 +1,6 @@
 require 'redis'
 require 'liquid'
-require 'maruku'
+require 'kramdown'
 require 'mime/types'
 require 'pathname'
 require 'active_support/core_ext'

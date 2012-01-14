@@ -27,7 +27,7 @@ describe Page do
 
       it "should have a body" do
         page.stub(:render_layout? => false)
-        page.body.should == "<h1 id='this_is_my_homepage'>This is my homepage</h1>"
+        page.body.should == "<h1 id=\"this-is-my-homepage\">This is my homepage</h1>\n"
       end
 
       it "should have headers" do
