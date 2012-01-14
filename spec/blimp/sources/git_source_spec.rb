@@ -15,6 +15,7 @@ describe Blimp::Sources::GitSource do
       FileUtils.mkdir("empty")
       FileUtils.mkdir(".hidden_dir")
       File.open("subdir/file.html", "w") {|f| f.print("File contents") }
+      File.open("subdir/bounce.html.markdown", "w") {|f| f.print("Markdown contents") }
       File.open("empty/.gitkeep", "w")
       File.open("empty.html", "w")
       File.open(".hidden_file", "w")
