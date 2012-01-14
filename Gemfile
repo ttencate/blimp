@@ -24,4 +24,5 @@ group :test do
   gem "fakefs"
   gem "mock_redis"
   gem "rack-test"
+  gem "simplecov"
 end

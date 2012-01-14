@@ -1,5 +1,7 @@
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
+require "simplecov"
+SimpleCov.start
 require 'rspec'
 require 'mock_redis'
 require 'fakefs/spec_helpers'
