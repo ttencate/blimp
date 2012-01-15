@@ -8,6 +8,6 @@ set :use_sudo,    false
 
 set :shared_symlinks, { } 
 
-role :web, "frozenfractal.com"                          # Your HTTP server, Apache/etc
-role :app, "frozenfractal.com"                          # This may be the same as your `Web` server
-role :db,  "frozenfractal.com", :primary => true        # This is where Rails migrations will run
+role :web, "blimp.martenveldthuis.com"                          # Your HTTP server, Apache/etc
+role :app, "blimp.martenveldthuis.com"                          # This may be the same as your `Web` server
+role :db,  "blimp.martenveldthuis.com", :primary => true        # This is where Rails migrations will run
