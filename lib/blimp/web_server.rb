@@ -16,12 +16,16 @@ module Blimp
     end
 
     get '*' do
-      handlers = @site.handlers_for_path(request.path_info)
+      handlers = site.handlers_for_path(request.path_info)
       # TODO try them one by one, raise Sinatra::NotFound if all fail
-      response_headers, response_body = handlers[0].handle(@site.source, request.path_info, params)
+      response_headers, response_body = handlers[0].handle(site.source, request.path_info, params)
 
       headers response_headers
       body    response_body
     end
+
+    protected
+
+    attr_reader :site
   end
 end
