@@ -9,6 +9,6 @@ describe Blimp::Handler do
   it 'should raise on unknown handlers' do
     expect {
       Blimp::Handler.find_by_name("unknown")
-    }.to raise_error(Blimp::Handler::NotFound)
+    }.to raise_error(Blimp::Handler::HandlerNotFound)
   end
 end

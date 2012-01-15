@@ -1,6 +1,11 @@
 module Blimp
   class Handler
-    class NotFound < StandardError; end
+    class HandlerNotFound < StandardError; end
+    class SourceNotFound < StandardError; end
+
+    def name
+      return @NAME
+    end
 
     class << self
       def find_by_name(name)
@@ -8,7 +13,7 @@ module Blimp
           handler = Blimp::Handlers.const_get(constant)
           return handler if handler < Blimp::Handler && handler::NAME == name
         end
-        raise NotFound, "No handler found for name #{name}"
+        raise HandlerNotFound, "No handler found for name #{name}"
       end
     end
 

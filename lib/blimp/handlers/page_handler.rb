@@ -4,7 +4,11 @@ module Blimp
       NAME = "page"
 
       def handle(source, theme, path, params = {})
-        resource = Page.from_path(path, source)
+        begin
+          resource = Page.from_path(path, source)
+        rescue Page::NotFound
+          raise SourceNotFound
+        end
         headers  = {"Content-Type" => "text/html"}
         body     = theme.render(resource.body)
         

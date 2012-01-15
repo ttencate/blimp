@@ -4,7 +4,11 @@ module Blimp
       NAME = "static"
 
       def handle(source, theme, path, params = {})
-        resource = Static.from_path(path, source)
+        begin
+          resource = Static.from_path(path, source)
+        rescue Static::NotFound
+          raise SourceNotFound
+        end
         headers  = {"Content-Type" => resource.mimetype}
         body     = resource.contents
         

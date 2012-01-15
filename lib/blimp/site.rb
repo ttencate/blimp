@@ -2,7 +2,7 @@ require "yaml"
 
 class Site
   class InvalidConfig < StandardError; end
-  class NoHandler < StandardError; end
+  class NotFound < StandardError; end
   CONFIG_FILE_PATH = "/_blimp.yaml"
 
   attr_reader :key
@@ -23,12 +23,17 @@ class Site
     @router = Router.new(config["handlers"])
   end
 
-  def handlers_for_path(path)
-    router.handlers_for_path(path)
-  end
-
-  def find_page(path)
-    Page.from_path(path, source)
+  def handle_request(path, params = {})
+    handlers = router.handlers_for_path(path)
+    for handler in handlers do
+      begin
+        response = handler.handle(source, theme, path, params)
+      rescue Blimp::Handler::SourceNotFound
+        raise NotFound, "Handler #{handler.name} matched but could not find source for #{path}"
+      end
+      return response if response
+    end
+    raise NotFound, "No handler handled URL path #{path}"
   end
 
   def has_domain?(domain)

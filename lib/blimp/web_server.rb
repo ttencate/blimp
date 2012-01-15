@@ -16,9 +16,11 @@ module Blimp
     end
 
     get '*' do
-      handlers = site.handlers_for_path(request.path_info)
-      # TODO try them one by one, raise Sinatra::NotFound if all fail
-      response_headers, response_body = handlers[0].handle(site.source, site.theme, request.path_info, params)
+      begin
+        response_headers, response_body = site.handle_request(request.path_info, params)
+      rescue Site::NotFound
+        raise Sinatra::NotFound
+      end
 
       headers response_headers
       body    response_body

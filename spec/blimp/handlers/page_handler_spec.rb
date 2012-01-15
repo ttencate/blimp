@@ -49,5 +49,19 @@ describe Blimp::Handlers::PageHandler do
         body.should include("<li>My list</li>")
       end
     end
+
+    context "for a handlable URL whose file does not exist" do
+      it "should raise" do
+        expect {
+          handler.handle(source, theme, "/nonexistent.html")
+        }.to raise_error(Blimp::Handler::SourceNotFound)
+      end
+    end
+
+    context "for URLs that it cannot handle" do
+      it "should return nil" do
+        handler.handle(source, theme, "/image.jpg").should be_nil
+      end
+    end
   end
 end

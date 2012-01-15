@@ -1,7 +1,10 @@
 require "spec_helper"
 
 describe Site do
-  let(:source) { Blimp::Sources::FakeSource.new({ "templates" => { "layout.liquid" => "{{ content }}" } }) }
+  let(:source) { Blimp::Sources::FakeSource.new({
+    "index.html" => "<h1>Hello world!</h1>",
+    "templates" => { "layout.liquid" => "{{ content }}" }
+  }) }
   let(:site) { Site.new("my-site", source) }
 
   it "should be initializable" do
@@ -29,12 +32,21 @@ describe Site do
     end
   end
 
-  describe "#find_page" do
-    it "should find a page" do
-      path = stub
-      page = stub
-      Page.stub(:from_path).with(path, source) { page }
-      site.find_page(path).should == page
+  describe "#handle_request" do
+    it "should return a response for existing URLs" do
+      site.handle_request("/index.html").should be
+    end
+
+    it "should raise for URLs that are matched by a handler but don't exist" do
+      expect {
+        site.handle_request("/nonexistent.html")
+      }.to raise_error(Site::NotFound)
+    end
+
+    it "should raise for URLs that don't match any handler" do
+      expect {
+        site.handle_request("/nonexistent")
+      }.to raise_error(Site::NotFound)
     end
   end
 
