@@ -9,7 +9,6 @@ class Site
   attr_reader :source
   attr_reader :theme
   attr_reader :domains
-  attr_reader :handlers
 
   liquid_methods :title
 
@@ -21,28 +20,11 @@ class Site
     @theme = Theme.new(source, "/templates")
 
     config = load_config
-
-    @handlers = { "/" => [
-      Blimp::Handlers::PageHandler.new(source, "/"),
-      Blimp::Handlers::StaticHandler.new(source, "/"),
-    ] }
-    for handler_config in config[:handlers] || [] do
-      path = handler_config[:path]
-      names = handler_config[:handler]
-      names = [names] if not names.is_a?(Array)
-      handlers[path] = names.map {|name| Blimp::Handler.find_by_name(name).new(source, path) }
-    end
+    @router = Router.new(config["handlers"])
   end
 
-  def handlers_for_path(path)
-    raise ArgumentError, "Path #{path} does not start with a slash" if not path.start_with?("/")
-    handler_list = []
-    while not path == "/"
-      handler_list += handlers[path] || []
-      path = File.dirname(path)
-    end
-    handler_list += handlers[path] # now /
-    return handler_list
+  def handler_for_path(path)
+    router.handler_for_path(path)
   end
 
   def find_page(path)
@@ -56,6 +38,10 @@ class Site
   def has_domain?(domain)
     domains.include?(domain)
   end
+
+  protected
+
+  attr_reader :router
 
   private
 

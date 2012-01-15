@@ -3,8 +3,8 @@ module Blimp
     class StaticHandler < Blimp::Handler
       @name = "static"
 
-      def handle(path, params = {})
-        resource = Static.from_path(path, @source)
+      def handle(source, path, params = {})
+        resource = Static.from_path(path, source)
         headers  = {"Content-Type" => resource.mimetype}
         body     = resource.contents
         

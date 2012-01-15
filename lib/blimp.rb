@@ -23,6 +23,7 @@ require_relative "blimp/theme"
 require_relative "blimp/page"
 require_relative "blimp/static"
 require_relative "blimp/renderer"
+require_relative "blimp/router"
 
 require_relative "blimp/web_server"
 

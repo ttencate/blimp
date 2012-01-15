@@ -14,8 +14,7 @@ module Blimp
       end
     end
 
-    def initialize(source, path)
-      @source = source
+    def initialize(path)
       @path = path
     end
   end
