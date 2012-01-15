@@ -2,10 +2,6 @@ require 'sinatra/base'
 
 module Blimp
   class Handler < Sinatra::Base
-    def name
-      return @NAME
-    end
-
     class HandlerNotFound < StandardError; end
     class CantTouchThis < StandardError; end
     
