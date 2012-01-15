@@ -44,6 +44,7 @@ describe Site do
     end
 
     it "should raise for URLs that don't match any handler" do
+      site = Site.new("my-site", source, :config => {:handlers => [{:path => "/", :handler => []}]})
       expect {
         site.handle_request("/nonexistent")
       }.to raise_error(Site::NotFound)

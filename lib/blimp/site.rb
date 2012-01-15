@@ -19,8 +19,8 @@ class Site
 
     @theme = Theme.new(source, "/templates")
 
-    config = load_config
-    @router = Router.new(config["handlers"])
+    config = options[:config] || load_config
+    @router = Router.new(config[:handlers])
   end
 
   def handle_request(path, params = {})
