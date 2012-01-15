@@ -6,11 +6,13 @@ module Blimp
       def handle(source, theme, path, params = {})
         begin
           resource = Page.from_path(path, source)
+        rescue Blimp::Renderer::UnknownType
+          return
         rescue Page::NotFound
           raise SourceNotFound
         end
-        headers  = {"Content-Type" => "text/html"}
-        body     = theme.render(resource.body)
+        headers = {"Content-Type" => "text/html"}
+        body    = theme.render(resource.body)
         
         [headers, body]
       end

@@ -4,6 +4,7 @@ describe Blimp::Handlers::PageHandler do
   let(:source) { Blimp::Sources::FakeSource.new({
     "index.html" => "<h1>My site's _index_</h1>",
     "page.html.markdown" => "* My list",
+    "image.jpg" => "Not a real JPEG",
     "_theme" => {
       "layout.liquid" => "<html><body>{{ content }}</body></html>"
     },
