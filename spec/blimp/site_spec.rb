@@ -10,7 +10,9 @@ describe Site do
 
   describe "config" do
     it "should read the config if file exists" do
-      pending "TODO: stub the source and check that the config is being read"
+      source = stub
+      source.should_receive(:get_file).with("/_blimp.yaml").and_return(SourceFile.new("/_blimp.yaml", ""))
+      Site.new("my-site", source)
     end
 
     it "should raise if the config file is invalid" do
@@ -21,7 +23,9 @@ describe Site do
     end
 
     it "should work if the config file does not exist" do
-      pending "TODO: stub the source and check that it attempts to read the config"
+      source = stub
+      source.should_receive(:get_file).with("/_blimp.yaml").and_raise(SourceFile::NotFound)
+      Site.new("my-site", source)
     end
   end
 

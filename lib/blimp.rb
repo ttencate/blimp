@@ -32,7 +32,7 @@ markdown = MIME::Type.from_hash('Content-Type' => 'text/markdown',
 MIME::Types.add(markdown)
 
 module Blimp
-  def self.root
+  def self.gem_root
     Pathname.new(File.dirname(__FILE__)).join("..")
   end
 end

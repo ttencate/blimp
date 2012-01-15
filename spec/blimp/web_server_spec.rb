@@ -10,7 +10,7 @@ describe Blimp::WebServer do
   end
 
   before do
-    sample_root = Blimp.root.join("sample")
+    sample_root = Blimp.gem_root.join("sample")
     sample_source = Blimp::Sources::DiskSource.new(sample_root)
     sample_site = Site.new("sample", sample_source, domains: ["example.org"])
     Sites.add(sample_site)
