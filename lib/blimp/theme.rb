@@ -11,8 +11,8 @@ class Theme
     Liquid::Template.parse(template)
   end
 
-  def render_page(page)
-    layout.render('content' => page.body)
+  def render(content)
+    layout.render('content' => content)
   end
 
 end

@@ -17,8 +17,8 @@ describe Theme do
   end
 
   it "should render pages" do
-    theme.stub(:layout => Liquid::Template.parse("{{ content }}"))
-    page = stub(:body => "A nice page")
-    theme.render_page(page).should == page.body
+    theme.stub(:layout => Liquid::Template.parse("<p>{{ content }}</p>"))
+    page = "A nice page"
+    theme.render(page).should == "<p>#{page}</p>"
   end
 end

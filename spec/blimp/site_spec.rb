@@ -38,14 +38,6 @@ describe Site do
     end
   end
 
-  describe "#render_page" do
-    it "should render a page" do
-      page = stub
-      page.stub!(:body).and_return("Page contents")
-      site.render_page(page).should include("Page contents")
-    end
-  end
-
   describe "#domains" do
     it "returns the domains" do
       domains = ["test"]

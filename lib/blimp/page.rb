@@ -11,8 +11,8 @@ class Page
                     source.get_file(source.get_filenames_by_prefix(path).first)
                   end
     source_mimetype = MIME::Types.type_for(source_file.path).first.to_s
-    contents, mimetype = Blimp::Renderer.render(source_file.contents, source_mimetype)
-    self.new(contents, mimetype)
+    body, mimetype = Blimp::Renderer.render(source_file.contents, source_mimetype)
+    self.new(body, mimetype)
   rescue SourceFile::NotFound
     raise NotFound
   end

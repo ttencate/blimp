@@ -31,10 +31,6 @@ class Site
     Page.from_path(path, source)
   end
 
-  def render_page(page)
-    theme.render_page(page)
-  end
-
   def has_domain?(domain)
     domains.include?(domain)
   end
