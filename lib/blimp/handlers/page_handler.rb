@@ -3,18 +3,18 @@ module Blimp
     class PageHandler < Blimp::Handler
       NAME = "page"
 
-      def handle(source, theme, path, params = {})
+      get "*" do |path|
         begin
           resource = Page.from_path(path, source)
         rescue Blimp::Renderer::UnknownType
-          return
+          raise CantTouchThis
         rescue Page::NotFound
-          raise SourceNotFound
+          raise Sinatra::NotFound
         end
-        headers = {"Content-Type" => "text/html"}
+        headers = {"Content-Type" => "text/html;charset=utf-8"}
+        # TODO verify that the theme actually returns utf-8
         body    = theme.render(resource.body)
-        
-        [headers, body]
+        [200, headers, body]
       end
     end
   end

@@ -6,7 +6,7 @@ describe Blimp::WebServer do
   include Rack::Test::Methods
 
   def app
-    Blimp::WebServer
+    Blimp::WebServer.new
   end
 
   before do

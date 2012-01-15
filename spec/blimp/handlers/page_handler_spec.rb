@@ -1,6 +1,9 @@
 require 'spec_helper'
+require 'rack/test'
 
 describe Blimp::Handlers::PageHandler do
+  include Rack::Test::Methods
+
   let(:source) { Blimp::Sources::FakeSource.new({
     "index.html" => "<h1>My site's _index_</h1>",
     "page.html.markdown" => "* My list",
@@ -10,58 +13,59 @@ describe Blimp::Handlers::PageHandler do
     },
   }) }
   let(:theme) { Theme.new(source, "/_theme") }
-  let(:handler) { Blimp::Handlers::PageHandler.new("/") }
+  let(:handler) { Blimp::Handlers::PageHandler.new("/", source, theme) }
+  def app; handler; end
 
   shared_examples_for "pages of all input types" do
-    it "returns headers" do
-      headers.should be_a(Hash)
-    end
-
     it "returns a content type of text/html" do
-      headers["Content-Type"].should == "text/html"
+      last_response.headers["Content-Type"].should == "text/html;charset=utf-8"
     end
 
     it "renders using the template" do
-      body.should include("<html><body>")
+      last_response.body.should include("<html><body>")
     end
   end
 
   describe "#handle" do
     context "for HTML files" do
-      let(:response) { handler.handle(source, theme, "/index.html") }
-      let(:headers) { response[0] }
-      let(:body)    { response[1] }
+      before do
+        get "/index.html"
+      end
 
       it_behaves_like "pages of all input types"
 
       it "returns the contents of HTML files" do
-        body.should include("<h1>My site's _index_</h1>")
+        last_response.body.should include("<h1>My site's _index_</h1>")
       end
     end
 
     context "for Markdown files" do
-      let(:response) { handler.handle(source, theme, "/page.html.markdown") }
-      let(:headers) { response[0] }
-      let(:body)    { response[1] }
+      before do
+        get "/page.html.markdown"
+      end
 
       it_behaves_like "pages of all input types"
 
       it "returns the rendered contents of Markdown files" do
-        body.should include("<li>My list</li>")
+        last_response.body.should include("<li>My list</li>")
       end
     end
 
     context "for a handlable URL whose file does not exist" do
-      it "should raise" do
-        expect {
-          handler.handle(source, theme, "/nonexistent.html")
-        }.to raise_error(Blimp::Handler::SourceNotFound)
+      before do
+        get "/nonexistent.html"
+      end
+
+      it "should return a 404 response" do
+        last_response.status.should == 404
       end
     end
 
     context "for URLs that it cannot handle" do
-      it "should return nil" do
-        handler.handle(source, theme, "/image.jpg").should be_nil
+      it "should raise" do
+        expect {
+          get "/image.jpg"
+        }.to raise_error(Blimp::Handler::CantTouchThis)
       end
     end
   end

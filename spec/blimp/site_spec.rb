@@ -1,11 +1,15 @@
-require "spec_helper"
+require 'spec_helper'
+require 'rack/test'
 
 describe Site do
+  include Rack::Test::Methods
+
   let(:source) { Blimp::Sources::FakeSource.new({
     "index.html" => "<h1>Hello world!</h1>",
     "templates" => { "layout.liquid" => "{{ content }}" }
   }) }
   let(:site) { Site.new("my-site", source) }
+  def app; site; end
 
   it "should be initializable" do
     site.should be
@@ -32,22 +36,26 @@ describe Site do
     end
   end
 
-  describe "#handle_request" do
+  describe "#call" do
     it "should return a response for existing URLs" do
-      site.handle_request("/index.html").should be
+      get "/index.html"
+      last_response.should be_ok
     end
 
-    it "should raise for URLs that are matched by a handler but don't exist" do
-      expect {
-        site.handle_request("/nonexistent.html")
-      }.to raise_error(Site::NotFound)
+    it "should return 404 for URLs that are matched by a handler but don't exist" do
+      get "/nonexistent.html"
+      last_response.should_not be_ok
     end
 
-    it "should raise for URLs that don't match any handler" do
-      site = Site.new("my-site", source, :config => {:handlers => [{:path => "/", :handler => []}]})
-      expect {
-        site.handle_request("/nonexistent")
-      }.to raise_error(Site::NotFound)
+    context "without any handlers" do
+      def app
+        Site.new("my-site", source, :config => {:handlers => [{:path => "/", :handler => []}]})
+      end
+
+      it "should raise for all URLs" do
+        get "/"
+        last_response.should_not be_ok
+      end
     end
   end
 

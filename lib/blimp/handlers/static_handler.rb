@@ -3,16 +3,15 @@ module Blimp
     class StaticHandler < Blimp::Handler
       NAME = "static"
 
-      def handle(source, theme, path, params = {})
+      get "*" do |path|
         begin
           resource = Static.from_path(path, source)
         rescue Static::NotFound
-          raise SourceNotFound
+          raise Sinatra::NotFound
         end
-        headers  = {"Content-Type" => resource.mimetype}
-        body     = resource.contents
-        
-        [headers, body]
+        headers = {"Content-Type" => resource.mimetype}
+        body    = resource.contents
+        [200, headers, body]
       end
     end
   end

@@ -1,11 +1,15 @@
-module Blimp
-  class Handler
-    class HandlerNotFound < StandardError; end
-    class SourceNotFound < StandardError; end
+require 'sinatra/base'
 
+module Blimp
+  class Handler < Sinatra::Base
     def name
       return @NAME
     end
+
+    class HandlerNotFound < StandardError; end
+    class CantTouchThis < StandardError; end
+    
+    set :raise_errors, true
 
     class << self
       def find_by_name(name)
@@ -17,8 +21,17 @@ module Blimp
       end
     end
 
-    def initialize(path)
+    # TODO taking source and theme here is ugly
+    def initialize(path, source, theme)
       @path = path
+      @source = source
+      @theme = theme
     end
+
+    protected
+
+    attr_reader :path
+    attr_reader :source
+    attr_reader :theme
   end
 end

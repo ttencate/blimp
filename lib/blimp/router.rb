@@ -1,14 +1,14 @@
 class Router
   def initialize(handler_config = [])
     @handlers = { "/" => [
-      Blimp::Handlers::PageHandler.new("/"),
-      Blimp::Handlers::StaticHandler.new("/"),
+      Blimp::Handlers::PageHandler,
+      Blimp::Handlers::StaticHandler,
     ] }
     for handler_config in handler_config || [] do
       path = handler_config[:path]
       names = handler_config[:handler]
       names = [names] if not names.is_a?(Array)
-      handlers[path] = names.map {|name| Blimp::Handler.find_by_name(name).new(path) }
+      handlers[path] = names.map {|name| Blimp::Handler.find_by_name(name) }
     end
   end
 

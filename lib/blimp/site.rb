@@ -23,17 +23,17 @@ class Site
     @router = Router.new(config[:handlers])
   end
 
-  def handle_request(path, params = {})
+  def call(env)
+    path = env["PATH_INFO"]
     handlers = router.handlers_for_path(path)
     for handler in handlers do
       begin
-        response = handler.handle(source, theme, path, params)
-      rescue Blimp::Handler::SourceNotFound
-        raise NotFound, "Handler #{handler.name} matched but could not find source for #{path}"
+        return handler.new(path, source, theme).call(env)
+      rescue Blimp::Handler::CantTouchThis
+        # Just try the next one
       end
-      return response if response
     end
-    raise NotFound, "No handler handled URL path #{path}"
+    return [404, {"Content-Type" => "text/plain"}, "No handler found that could handle #{path}"]
   end
 
   def has_domain?(domain)
