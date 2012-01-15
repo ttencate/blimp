@@ -11,10 +11,9 @@ module Blimp
         rescue Page::NotFound
           raise Sinatra::NotFound
         end
-        headers = {"Content-Type" => "text/html;charset=utf-8"}
+        headers "Content-Type" => "text/html;charset=utf-8"
         # TODO verify that the theme actually returns utf-8
-        body    = theme.render(resource.body)
-        [200, headers, body]
+        body theme.render(resource.body)
       end
     end
   end

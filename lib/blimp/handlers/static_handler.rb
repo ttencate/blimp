@@ -9,9 +9,8 @@ module Blimp
         rescue Static::NotFound
           raise Sinatra::NotFound
         end
-        headers = {"Content-Type" => resource.mimetype}
-        body    = resource.contents
-        [200, headers, body]
+        headers "Content-Type" => resource.mimetype
+        body resource.contents
       end
     end
   end
