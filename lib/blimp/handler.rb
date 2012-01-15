@@ -3,12 +3,10 @@ module Blimp
     class NotFound < StandardError; end
 
     class << self
-      attr_reader :name
-
       def find_by_name(name)
         for constant in Blimp::Handlers.constants do
           handler = Blimp::Handlers.const_get(constant)
-          return handler if handler < Blimp::Handler && handler.name == name
+          return handler if handler < Blimp::Handler && handler::NAME == name
         end
         raise NotFound, "No handler found for name #{name}"
       end

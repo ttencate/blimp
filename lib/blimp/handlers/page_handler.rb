@@ -1,7 +1,7 @@
 module Blimp
   module Handlers
     class PageHandler < Blimp::Handler
-      @name = "page"
+      NAME = "page"
     end
   end
 end

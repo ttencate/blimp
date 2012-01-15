@@ -1,7 +1,7 @@
 module Blimp
   module Handlers
     class StaticHandler < Blimp::Handler
-      @name = "static"
+      NAME = "static"
 
       def handle(source, path, params = {})
         resource = Static.from_path(path, source)
