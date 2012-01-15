@@ -23,8 +23,8 @@ class Site
     @router = Router.new(config["handlers"])
   end
 
-  def handler_for_path(path)
-    router.handler_for_path(path)
+  def handlers_for_path(path)
+    router.handlers_for_path(path)
   end
 
   def find_page(path)
