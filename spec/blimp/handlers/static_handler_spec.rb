@@ -6,9 +6,10 @@ describe Blimp::Handlers::StaticHandler do
 
   let(:source) { Blimp::Sources::FakeSource.new({ "image.jpg" => "A kitten" }) }
   let(:handler) {
-    handler = Blimp::Handlers::StaticHandler.new("/")
-    handler.stub(:source).and_return(source)
+    Blimp::Handlers::StaticHandler.any_instance.stub(:source).and_return(source)
+    Blimp::Handlers::StaticHandler.new("/")
   }
+
   def app; handler; end
 
   context "for existing files" do

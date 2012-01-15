@@ -14,10 +14,9 @@ describe Blimp::Handlers::PageHandler do
   }) }
   let(:theme) { Theme.new(source, "/_theme") }
   let(:handler) {
-    handler = Blimp::Handlers::PageHandler.new("/")
-    handler.stub(:source).and_return(source)
-    handler.stub(:theme).and_return(theme)
-    handler
+    Blimp::Handlers::PageHandler.any_instance.stub(:source).and_return(source)
+    Blimp::Handlers::PageHandler.any_instance.stub(:theme).and_return(theme)
+    Blimp::Handlers::PageHandler.new("/")
   }
   def app; handler; end
 
