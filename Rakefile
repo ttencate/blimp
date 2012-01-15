@@ -17,8 +17,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "blimp"
   gem.homepage = "http://github.com/ttencate/blimp"
   gem.license = "MIT"
-  gem.summary = %Q{Git-based website generator}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{Git-based CMS}
+  gem.description = %Q{Blimp is a content management system based on Git. It lets you manage your site as a set of files, with whatever editor you prefer. Unlike static site generators like Jekyll, Blimp pulls its content live from the repository. It can also run without Git and pull its content directly from a directory.}
   gem.email = ["ttencate@gmail.com", "marten@veldthuis.com"]
   gem.authors = ["Thomas ten Cate", "Marten Veldthuis"]
   # dependencies defined in Gemfile
