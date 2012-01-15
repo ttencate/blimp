@@ -21,11 +21,13 @@ module Blimp
       end
     end
 
-    # TODO taking source and theme here is ugly
-    def initialize(path, source, theme)
+    def initialize(path)
       @path = path
-      @source = source
-      @theme = theme
+    end
+
+    before do
+      @source = env["blimp.source"]
+      @theme = env["blimp.theme"]
     end
 
     protected

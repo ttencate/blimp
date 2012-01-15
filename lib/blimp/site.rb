@@ -25,10 +25,12 @@ class Site
 
   def call(env)
     path = env["PATH_INFO"]
+    env["blimp.source"] = source
+    env["blimp.theme"] = theme
     handlers = router.handlers_for_path(path)
     for handler in handlers do
       begin
-        return handler.new(path, source, theme).call(env)
+        return handler.new(path).call(env)
       rescue Blimp::Handler::CantTouchThis
         # Just try the next one
       end

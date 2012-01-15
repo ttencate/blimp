@@ -13,7 +13,12 @@ describe Blimp::Handlers::PageHandler do
     },
   }) }
   let(:theme) { Theme.new(source, "/_theme") }
-  let(:handler) { Blimp::Handlers::PageHandler.new("/", source, theme) }
+  let(:handler) {
+    handler = Blimp::Handlers::PageHandler.new("/")
+    handler.stub(:source).and_return(source)
+    handler.stub(:theme).and_return(theme)
+    handler
+  }
   def app; handler; end
 
   shared_examples_for "pages of all input types" do
@@ -26,47 +31,45 @@ describe Blimp::Handlers::PageHandler do
     end
   end
 
-  describe "#handle" do
-    context "for HTML files" do
-      before do
-        get "/index.html"
-      end
-
-      it_behaves_like "pages of all input types"
-
-      it "returns the contents of HTML files" do
-        last_response.body.should include("<h1>My site's _index_</h1>")
-      end
+  context "for HTML files" do
+    before do
+      get "/index.html"
     end
 
-    context "for Markdown files" do
-      before do
-        get "/page.html.markdown"
-      end
+    it_behaves_like "pages of all input types"
 
-      it_behaves_like "pages of all input types"
+    it "returns the contents of HTML files" do
+      last_response.body.should include("<h1>My site's _index_</h1>")
+    end
+  end
 
-      it "returns the rendered contents of Markdown files" do
-        last_response.body.should include("<li>My list</li>")
-      end
+  context "for Markdown files" do
+    before do
+      get "/page.html.markdown"
     end
 
-    context "for a handlable URL whose file does not exist" do
-      before do
-        get "/nonexistent.html"
-      end
+    it_behaves_like "pages of all input types"
 
-      it "should return a 404 response" do
-        last_response.status.should == 404
-      end
+    it "returns the rendered contents of Markdown files" do
+      last_response.body.should include("<li>My list</li>")
+    end
+  end
+
+  context "for a handlable URL whose file does not exist" do
+    before do
+      get "/nonexistent.html"
     end
 
-    context "for URLs that it cannot handle" do
-      it "should raise" do
-        expect {
-          get "/image.jpg"
-        }.to raise_error(Blimp::Handler::CantTouchThis)
-      end
+    it "should return a 404 response" do
+      last_response.status.should == 404
+    end
+  end
+
+  context "for URLs that it cannot handle" do
+    it "should raise" do
+      expect {
+        get "/image.jpg"
+      }.to raise_error(Blimp::Handler::CantTouchThis)
     end
   end
 end
