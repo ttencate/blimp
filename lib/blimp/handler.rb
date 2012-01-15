@@ -19,6 +19,7 @@ module Blimp
 
     def initialize(path)
       @path = path
+      super(nil)
     end
 
     before do
