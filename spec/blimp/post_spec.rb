@@ -10,6 +10,10 @@ describe Blimp::Post do
       post.date.should == Date.new(2012, 01, 02)
     end
 
+    it 'parses the slug' do
+      post.slug.should == 'foo'
+    end
+
     it 'stores the body' do
       post.body.should == body
     end
