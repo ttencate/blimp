@@ -25,6 +25,9 @@ require_relative "blimp/static"
 require_relative "blimp/renderer"
 require_relative "blimp/router"
 
+require_relative "blimp/blog"
+require_relative "blimp/post"
+
 require_relative "blimp/web_server"
 
 markdown = MIME::Type.from_hash('Content-Type' => 'text/markdown',
