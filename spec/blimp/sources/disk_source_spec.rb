@@ -28,7 +28,11 @@ describe Blimp::Sources::DiskSource do
       FakeFS::FileSystem.clear
     end
 
-    it "should not show hidden directories" do
+    it "should not include hidden directories in listings" do
+      source.get_dir("/").entries.should_not include("/.hidden_dir")
+    end
+
+    it "should not reveal presence of hidden directories" do
       source.is_dir?("/.hidden_dir").should be_false
     end
 
@@ -38,7 +42,11 @@ describe Blimp::Sources::DiskSource do
       }.to raise_error(SourceDir::NotFound)
     end
 
-    it "should not show hidden files" do
+    it "should not include hidden files in listings" do
+      source.get_dir("/").entries.should_not include("/.hidden_file")
+    end
+
+    it "should not reveal presence of hidden files" do
       source.is_file?("/.hidden_file").should be_false
     end
 
