@@ -14,6 +14,7 @@ require_relative "blimp/source_dir"
 require_relative "blimp/source_file"
 
 require_relative "blimp/handler"
+require_relative "blimp/handlers/blog_handler"
 require_relative "blimp/handlers/page_handler"
 require_relative "blimp/handlers/static_handler"
 
