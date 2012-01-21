@@ -8,12 +8,12 @@ module Blimp
       end
 
       def get_file(path)
-        raise SourceFile::NotFound if not files.has_key?(path)
+        raise SourceFile::NotFound, path if not files.has_key?(path)
         SourceFile.new(path, files[path])
       end
 
       def get_dir(path)
-        raise SourceDir::NotFound if not dirs.has_key?(path)
+        raise SourceDir::NotFound, path if not dirs.has_key?(path)
         SourceDir.new(path, dirs[path])
       end
 
