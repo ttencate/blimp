@@ -9,6 +9,7 @@ gem "i18n"
 gem "liquid"
 gem "kramdown"
 gem "mime-types"
+gem "rb-inotify"
 gem "redis"
 gem "sinatra"
 

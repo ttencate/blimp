@@ -9,6 +9,7 @@ require_relative "blimp/source"
 require_relative "blimp/sources/disk_source"
 require_relative "blimp/sources/fake_source"
 require_relative "blimp/sources/git_source"
+require_relative "blimp/sources/git_watcher"
 require_relative "blimp/sources/redis_source"
 
 require_relative "blimp/source_dir"

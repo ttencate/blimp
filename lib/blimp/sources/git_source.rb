@@ -48,12 +48,25 @@ module Blimp
         visible?(path) and resolve_path(path).is_a?(Grit::Tree)
       end
 
+      def path
+        repo.path
+      end
+
+      def head_path
+        File.join(repo.path, "refs/heads", branch)
+      end
+
       protected
 
       attr_reader :repo
 
+      def branch
+        # TODO make configurable
+        "master"
+      end
+
       def tree
-        repo.tree
+        repo.tree(branch)
       end
 
       def resolve_path(path)

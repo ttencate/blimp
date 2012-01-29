@@ -1,37 +1,7 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Blimp::Sources::GitSource do
-  let(:normal_repo) { Dir.mktmpdir("normal_repo") }
-  let(:bare_repo) { Dir.mktmpdir("bare_repo") }
-
-  def git(*args)
-    system("git", *args, STDOUT => "/dev/null") or raise "git failed: #{$?}"
-  end
-
-  before(:all) do
-    Dir.chdir(normal_repo) {|path|
-      git("init")
-      FileUtils.mkdir("subdir")
-      FileUtils.mkdir("empty")
-      FileUtils.mkdir(".hidden_dir")
-      File.open("subdir/file.html", "w") {|f| f.print("File contents") }
-      File.open("subdir/bounce.html.markdown", "w") {|f| f.print("Markdown contents") }
-      File.open("empty/.gitkeep", "w")
-      File.open("empty.html", "w")
-      File.open(".hidden_file", "w")
-      git("add", "-A")
-      git("commit", "-mTest commit")
-    }
-
-    Dir.chdir(bare_repo) {|path|
-      git("clone", "--bare", normal_repo, ".")
-    }
-  end
-
-  after(:all) do
-    FileUtils.remove_entry_secure(normal_repo)
-    FileUtils.remove_entry_secure(bare_repo)
-  end
+  include_context "git repositories"
 
   describe "#initialize" do
     it "should take a repo path" do
@@ -72,6 +42,27 @@ describe Blimp::Sources::GitSource do
       expect {
         source.get_dir("/.git")
       }.to raise_error(SourceDir::NotFound)
+    end
+
+    describe "#path" do
+      it "returns an absolute path" do
+        source.path.should start_with("/")
+      end
+
+      it "returns the path of the .git directory" do
+        File.exists?(File.join(source.path, "HEAD")).should be_true
+      end
+    end
+
+    describe "#head_path" do
+      it "returns a subdirectory of the repo" do
+        source.head_path.should start_with(source.path)
+      end
+
+      it "points to a file containing a SHA1 hash" do
+        contents = File.open(source.head_path, "r").read.chomp
+        contents.should match(/[0-9a-f]{40}/)
+      end
     end
   end
 end
